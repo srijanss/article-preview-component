@@ -1,0 +1,16 @@
+@import "./_css_reset.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.attribution {
+  font-size: 11px;
+  text-align: center;
+  padding: 3rem 0 1rem 0;
+  & a {
+    color: hsl(228, 45%, 44%);
+  }
+}
