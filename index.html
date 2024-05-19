@@ -11,16 +11,78 @@
       sizes="32x32"
       href="./assets/images/favicon-32x32.png"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./assets/css/styles.css" />
     <title>Frontend Mentor | Article preview component</title>
     <script defer src="./assets/js/app.js"></script>
   </head>
   <body>
-    Shift the overall look and feel by adding these wonderful touches to
-    furniture in your home Ever been in a room and felt like something was
-    missing? Perhaps it felt slightly bare and uninviting. I’ve got some simple
-    tips to help you make any room feel complete. Michelle Appleton 28 Jun 2020
-    Share
+    <main>
+      <article class="card">
+        <img
+          src="./assets/images/drawers.jpg"
+          alt="Drawers"
+          class="card__image"
+        />
+        <h1 class="card__title">
+          Shift the overall look and feel by adding these wonderful touches to
+          furniture in your home
+        </h1>
+        <p class="card__description">
+          Ever been in a room and felt like something was missing? Perhaps it
+          felt slightly bare and uninviting. I’ve got some simple tips to help
+          you make any room feel complete.
+        </p>
+        <div class="card__author">
+          <figure>
+            <img
+              src="./assets/images/avatar-michelle.jpg"
+              alt="Michelle Appleton"
+            />
+            <figcaption>
+              <h2>Michelle Appleton</h2>
+              <time datetime="2020-06-28">28 Jun 2020</time>
+            </figcaption>
+          </figure>
+          <div class="card__share">
+            <button class="card__share__btn">
+              <img src="./assets/images/icon-share.svg" alt="Share" />
+            </button>
+            <div class="card__share__links">
+              <p>Share</p>
+              <ul>
+                <li>
+                  <a href="#">
+                    <img
+                      src="./assets/images/icon-facebook.svg"
+                      alt="Facebook"
+                    />
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img src="./assets/images/icon-twitter.svg" alt="Twitter" />
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img
+                      src="./assets/images/icon-pinterest.svg"
+                      alt="Pinterest"
+                    />
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+    </main>
 
     <footer>
       <p class="attribution">
