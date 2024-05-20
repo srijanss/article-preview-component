@@ -63,7 +63,7 @@ main {
     object-position: center -1rem;
     border-radius: 10px 10px 0 0;
   }
-  & .card__content {
+  & .card__body {
     padding: 36px 32px 0;
     & h1.card__title {
       font-weight: var(--fw-bold);
@@ -117,9 +117,10 @@ main {
       }
     }
     & .card__share {
+      --share-btn-size: 32px;
       & .card__share-btn {
-        width: 32px;
-        height: 32px;
+        width: var(--share-btn-size);
+        height: var(--share-btn-size);
         border-radius: 50%;
         display: flex;
         justify-content: center;
@@ -131,12 +132,9 @@ main {
       }
       & .card__share-btn.slider-active {
         position: absolute;
-        top: calc(50% - 16px);
+        top: calc(50% - var(--share-btn-size) / 2);
         right: 32px;
-        background-color: var(--desaturated-dark-blue);
-        & svg path {
-          fill: var(--white);
-        }
+        @mixin share-btn-active;
       }
       & .card__share-links {
         opacity: 0;
@@ -144,7 +142,6 @@ main {
         height: 0;
         padding: 0;
         background-color: var(--very-dark-grayish-blue);
-        transition: width 0.3s ease-in-out;
         & p {
           font-size: 0;
         }
@@ -166,52 +163,44 @@ main {
         gap: 21px;
         border-radius: 0 0 10px 10px;
         padding: 0 32px;
-        transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
+        transition: width 0.1s ease-in-out, padding 0.1s ease-in-out;
         & p {
-          font-weight: var(--fw-medium);
-          font-size: 13px;
-          line-height: 1.5;
-          letter-spacing: 5px;
-          paragraph-spacing: 1px;
-          color: var(--grayish-blue);
-          text-transform: uppercase;
-          transition: font-size 0.3s ease-in;
+          @mixin share-block-text;
+          transition: font-size 0.1s ease-out;
         }
         & ul {
-          width: 100%;
-          display: flex;
-          gap: 16px;
-          align-items: end;
-          transition: width 0.3s ease-in;
+          @mixin share-block-links;
+          transition: width 0.1s ease-out;
         }
       }
     }
   }
 
   @mixin media-query-desktop {
-    width: 730px;
-    height: 280px;
+    --card-width: 730px;
+    --card-height: 280px;
+    --card-image-width: 285px;
+    width: var(--card-width);
+    height: var(--card-height);
     display: grid;
-    grid-template-columns: 285px 1fr;
+    grid-template-columns: var(--card-image-width) 1fr;
     grid-template-areas:
-      "image card-content"
-      "image card-footer";
+      "card-image card-body"
+      "card-image card-footer";
     & .card__image {
-      grid-area: image;
+      grid-area: card-image;
       height: 100%;
       object-fit: cover;
       object-position: left center;
       border-radius: 10px 0 0 10px;
     }
-    & .card__content {
-      grid-area: card-content;
+    & .card__body {
+      grid-area: card-body;
       padding: 32px 40px 0;
       & h1.card__title {
         font-size: 20px;
         line-height: 1.4;
         letter-spacing: 0.25px;
-        paragraph-spacing: 1px;
-        color: var(--very-dark-grayish-blue);
         padding-bottom: 12px;
       }
       & p.card__description {
@@ -225,34 +214,23 @@ main {
       & .card__share {
         position: relative;
         & .card__share-links {
-          opacity: 0;
-          width: 0;
-          height: 0;
           position: absolute;
-          background-color: var(--very-dark-grayish-blue);
+          top: 0;
+          right: 0;
           transform-origin: bottom center;
-          transform: scaleY(0);
-          transition: transform 0.1s linear;
-          & p {
-            font-size: 0;
-            transition: none;
-          }
-          & ul {
-            width: 0;
-            transition: none;
-          }
+          transform: scale(0);
+          transition: transform 0.05s ease-in-out;
         }
         & .card__share-btn.popover-show {
-          background-color: var(--desaturated-dark-blue);
-          & svg path {
-            fill: var(--white);
-          }
+          @mixin share-btn-active;
         }
         & .card__share-links.popover-show {
+          --popover-width: 248px;
+          --popover-height: 55px;
           opacity: 1;
-          width: 248px;
-          height: 55px;
-          transform: scaleY(1);
+          width: var(--popover-width);
+          height: var(--popover-height);
+          transform: scale(1);
           grid-template-columns: auto 1fr;
           padding: 0 36px;
           border-radius: 10px;
@@ -262,34 +240,27 @@ main {
           align-items: center;
           gap: 21px;
           position: absolute;
-          top: calc((55px + 30px) * -1);
-          right: calc(((248px / 2) - 15px) * -1);
+          top: calc((var(--popover-height) + 30px) * -1);
+          right: calc(((var(--popover-width) / 2) - 15px) * -1);
           &:after {
+            --popover-arrow-size: 12px;
             content: "";
             width: 0;
             height: 0;
-            border-top: 12px solid var(--very-dark-grayish-blue);
-            border-bottom: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-left: 12px solid transparent;
+            border-top: var(--popover-arrow-size) solid
+              var(--very-dark-grayish-blue);
+            border-bottom: var(--popover-arrow-size) solid transparent;
+            border-right: var(--popover-arrow-size) solid transparent;
+            border-left: var(--popover-arrow-size) solid transparent;
             position: absolute;
-            bottom: -23px;
-            left: calc(50% - 12px);
+            bottom: calc(var(--popover-arrow-size) * 2 * -1);
+            left: calc(50% - var(--popover-arrow-size));
           }
           & p {
-            font-weight: var(--fw-medium);
-            font-size: 13px;
-            line-height: 1.5;
-            letter-spacing: 5px;
-            paragraph-spacing: 1px;
-            color: var(--grayish-blue);
-            text-transform: uppercase;
+            @mixin share-block-text;
           }
           & ul {
-            width: 100%;
-            display: flex;
-            gap: 16px;
-            align-items: end;
+            @mixin share-block-links;
           }
         }
       }

@@ -3,3 +3,27 @@
     @mixin-content;
   }
 }
+
+@define-mixin share-block-links {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  align-items: end;
+}
+
+@define-mixin share-block-text {
+  font-weight: var(--fw-medium);
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: 5px;
+  paragraph-spacing: 1px;
+  color: var(--grayish-blue);
+  text-transform: uppercase;
+}
+
+@define-mixin share-btn-active {
+  background-color: var(--desaturated-dark-blue);
+  & svg path {
+    fill: var(--white);
+  }
+}

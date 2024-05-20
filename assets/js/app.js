@@ -1,11 +1,12 @@
-const viewPortWidth = window.innerWidth;
+let viewPortWidth = window.innerWidth;
+const desktopWidth = 1024;
 const cardShareBtn = document.querySelector(".card__share-btn");
 const cardShareLinks = document.querySelector(".card__share-links");
 let popoverActive = false;
 
 function showShareLinks() {
   popoverActive = true;
-  if (viewPortWidth < 1024) {
+  if (viewPortWidth < desktopWidth) {
     cardShareLinks.classList.add("slider-active");
     cardShareBtn.classList.add("slider-active");
   } else {
@@ -16,7 +17,7 @@ function showShareLinks() {
 
 function hideShareLinks() {
   popoverActive = false;
-  if (viewPortWidth < 1024) {
+  if (viewPortWidth < desktopWidth) {
     cardShareLinks.classList.remove("slider-active");
     cardShareBtn.classList.remove("slider-active");
   } else {
@@ -35,4 +36,9 @@ toggleShareLinksEvents.forEach((event) => {
     }
     !popoverActive ? showShareLinks() : hideShareLinks();
   });
+});
+
+window.addEventListener("resize", () => {
+  viewPortWidth = window.innerWidth;
+  hideShareLinks();
 });
