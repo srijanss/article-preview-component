@@ -1,94 +1,138 @@
-# Frontend Mentor - Article preview component
+# Frontend Mentor - Article preview component solution
 
-![Design preview for the Article preview component coding challenge](./design/desktop-preview.jpg)
+This is a solution to the [Article preview component challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/article-preview-component-dYBN_pYFT). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-## Welcome! 👋
+## Table of contents
 
-Thanks for checking out this front-end coding challenge.
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+- [Author](#author)
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects.
+## Overview
 
-**To do this challenge, you need a basic understanding of HTML, CSS and a tiny bit of JavaScript.**
+### The challenge
 
-## The challenge
-
-Your challenge is to build out this article preview component and get it looking as close to the design as possible.
-
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
-
-The only JavaScript you'll need for this challenge is to initiate the share options when someone clicks the share icon.
-
-Your users should be able to: 
+Users should be able to:
 
 - View the optimal layout for the component depending on their device's screen size
 - See the social media share links when they click the share icon
 
-Want some support on the challenge? [Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+### Screenshot
 
-## Where to find everything
+![](./assets/images/desktop-screenshot.png)
+![](./assets/images/mobile-screenshot.png)
 
-Your task is to build out the project to the designs inside the `/design` folder. You will find both a mobile and a desktop version of the design. 
+### Links
 
-The designs are in JPG static format. Using JPGs will mean that you'll need to use your best judgment for styles such as `font-size`, `padding` and `margin`. 
+- Solution URL: [https://github.com/srijanss/article-preview-component](https://github.com/srijanss/article-preview-component)
+- Live Site URL: [https://srijanss.github.io/article-preview-component/](https://srijanss.github.io/article-preview-component/)
 
-If you would like the design files (we provide Sketch & Figma versions) to inspect the design in more detail, you can [subscribe as a PRO member](https://www.frontendmentor.io/pro).
+## My process
 
-You will find all the required assets in the `/images` folder. The assets are already optimized.
+### Built with
 
-There is also a `style-guide.md` file containing the information you'll need, such as color palette and fonts.
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- CSS Grid
+- Mobile-first workflow
+- [Vite](https://vitejs.dev/) - Lightweight frontend tooling
+- [PostCSS](https://postcss.org/) - Tool to transform CSS using plugins
 
-## Building your project
+### What I learned
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+```html
+<button class="card__share-btn">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="15"
+    height="13"
+    role="img"
+    aria-labelledby="share-svg-title"
+    focusable="false"
+  >
+    <title id="share-svg-title">Share Icon</title>
+    <path
+      fill="#6E8098"
+      d="M15 6.495L8.766.014V3.88H7.441C3.33 3.88 0 7.039 0 10.936v2.049l.589-.612C2.59 10.294 5.422 9.11 8.39 9.11h.375v3.867L15 6.495z"
+    />
+  </svg>
+</button>
+```
 
-1. Initialize your project as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/).
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+I've used svg image directly in html taking accessibility into consideration.
 
-## Deploying your project
+```css
+& .card__share {
+  position: relative;
+  & .card__share-links {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform-origin: bottom center;
+    transform: scale(0);
+    transition: transform 0.05s ease-in-out;
+  }
+  & .card__share-btn.popover-show {
+    @mixin share-btn-active;
+  }
+  ...;
+}
+```
 
-As mentioned above, there are many ways to host your project for free. Our recommended hosts are:
+I got to learn about the css transition, transform and transform-origin property.
 
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
+```css
+&:after {
+  --popover-arrow-size: 12px;
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: var(--popover-arrow-size) solid var(--very-dark-grayish-blue);
+  border-bottom: var(--popover-arrow-size) solid transparent;
+  border-right: var(--popover-arrow-size) solid transparent;
+  border-left: var(--popover-arrow-size) solid transparent;
+  position: absolute;
+  bottom: calc(var(--popover-arrow-size) * 2 * -1);
+  left: calc(50% - var(--popover-arrow-size));
+}
+```
 
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://medium.com/frontend-mentor/frontend-mentor-trusted-hosting-providers-bf000dfebe).
+I also got to learn about how to use CSS borders to create tringle shapes.
 
-## Create a custom `README.md`
+```js
+const toggleShareLinksEvents = ["click", "touchstart", "keydown"];
+toggleShareLinksEvents.forEach((event) => {
+  cardShareBtn.addEventListener(event, (e) => {
+    if (e.type === "keydown" && (e.key !== "Enter" || e.key !== " ")) {
+      return;
+    } else {
+      e.preventDefault();
+    }
+    !popoverActive ? showShareLinks() : hideShareLinks();
+  });
+});
 
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
+window.addEventListener("resize", () => {
+  viewPortWidth = window.innerWidth;
+  hideShareLinks();
+});
+```
 
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
+I learned how to add event listeners and toggle share links block based on user interactions.
+I've also used window.innerWidth to decide on which share links styles to use for which screens. And update the viewPortWidth variable based on window resize so that screen size is updated and corresponding share link block is shown.
 
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
+### Continued development
 
-## Submitting your solution
+I will focus more on CSS transition and aniimation properties to make the animations more shuttle and professional looking.
 
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://medium.com/frontend-mentor/a-complete-guide-to-submitting-solutions-on-frontend-mentor-ac6384162248) for tips on how to do this.
+## Author
 
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
-
-## Sharing your solution
-
-There are multiple places you can share your solution:
-
-1. Share your solution page in the **#finished-projects** channel of the [community](https://www.frontendmentor.io/community). 
-2. Tweet [@frontendmentor](https://twitter.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in the tweet. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on other social channels like LinkedIn.
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
-
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback. 
-
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
-
-## Got feedback for us?
-
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
-
-This challenge is completely free. Please share it with anyone who will find it useful for practice.
-
-**Have fun building!** 🚀
+- Website - [Srijan Manandhar](https://github.com/srijanss)
+- Frontend Mentor - [@srijanss](https://www.frontendmentor.io/profile/srijanss)
