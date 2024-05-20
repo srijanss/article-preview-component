@@ -1,4 +1,5 @@
 @import "./_css_reset.css";
+@import "./_mixinx.css";
 
 :root {
   --white: hsl(0, 0%, 100%);
@@ -6,6 +7,7 @@
   --light-grayish-blue: hsl(210, 46%, 95%);
   --very-dark-grayish-blue: hsl(227, 19%, 35%);
   --desaturated-dark-blue: hsl(214, 17%, 51%);
+  --drop-shadow: #c9d5e1;
   --default-font-family: "Manrope", sans-serif;
   --default-font-size: 13px;
   --fw-medium: 500;
@@ -37,41 +39,50 @@ a {
 main {
   width: 100%;
   padding: 74px 24px 0;
+
+  @mixin media-query-desktop {
+    height: 100vh;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .card {
   width: 100%;
-  /* width: 327px; */
-  /* height: 512px; */
   margin: 0 auto;
   border-radius: 10px;
   background-color: white;
-  overflow: hidden;
-  /* padding-bottom: 20px; */
+  box-shadow: 0 40px 40px -10px var(--drop-shadow);
 
   & .card__image {
     width: 100%;
     height: 200px;
     object-fit: cover;
     object-position: center -1rem;
+    border-radius: 10px 10px 0 0;
   }
-  & h1.card__title {
-    font-weight: var(--fw-bold);
-    font-size: 16px;
-    line-height: 1.5;
-    letter-spacing: 0.2px;
-    paragraph-spacing: 1px;
-    color: var(--very-dark-grayish-blue);
-    padding: 36px 32px 12px;
-  }
-  & p.card__description {
-    font-weight: var(--fw-medium);
-    font-size: 13px;
-    line-height: 1.5;
-    letter-spacing: 0.12px;
-    paragraph-spacing: 1px;
-    color: var(--desaturated-dark-blue);
-    padding: 0 32px 32px;
+  & .card__content {
+    padding: 36px 32px 0;
+    & h1.card__title {
+      font-weight: var(--fw-bold);
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: 0.2px;
+      paragraph-spacing: 1px;
+      color: var(--very-dark-grayish-blue);
+      padding-bottom: 12px;
+    }
+    & p.card__description {
+      font-weight: var(--fw-medium);
+      font-size: 13px;
+      line-height: 1.5;
+      letter-spacing: 0.12px;
+      paragraph-spacing: 1px;
+      color: var(--desaturated-dark-blue);
+      padding-bottom: 32px;
+    }
   }
   & .card__footer {
     position: relative;
@@ -106,7 +117,7 @@ main {
       }
     }
     & .card__share {
-      & .card__share__btn {
+      & .card__share-btn {
         width: 32px;
         height: 32px;
         border-radius: 50%;
@@ -118,7 +129,7 @@ main {
         z-index: 1;
         background-color: var(--light-grayish-blue);
       }
-      & .card__share__btn.active {
+      & .card__share-btn.slider-active {
         position: absolute;
         top: calc(50% - 16px);
         right: 32px;
@@ -127,18 +138,35 @@ main {
           fill: var(--white);
         }
       }
-      & .card__share__links {
+      & .card__share-links {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        padding: 0;
+        background-color: var(--very-dark-grayish-blue);
+        transition: width 0.3s ease-in-out;
+        & p {
+          font-size: 0;
+        }
+        & ul {
+          width: 0;
+        }
+      }
+      & .card__share-links.slider-active {
+        opacity: 1;
         width: 100%;
         height: 100%;
-        background-color: var(--very-dark-grayish-blue);
         position: absolute;
-        top: 0;
+        bottom: 0;
         right: 0;
-        padding: 0 32px;
-        display: flex;
+        z-index: 0;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
         align-items: center;
         gap: 21px;
-        z-index: 0;
+        border-radius: 0 0 10px 10px;
+        padding: 0 32px;
+        transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
         & p {
           font-weight: var(--fw-medium);
           font-size: 13px;
@@ -147,13 +175,111 @@ main {
           paragraph-spacing: 1px;
           color: var(--grayish-blue);
           text-transform: uppercase;
+          transition: font-size 0.3s ease-in;
         }
         & ul {
+          width: 100%;
           display: flex;
           gap: 16px;
           align-items: end;
+          transition: width 0.3s ease-in;
         }
-        display: none;
+      }
+    }
+  }
+
+  @mixin media-query-desktop {
+    width: 730px;
+    height: 280px;
+    display: grid;
+    grid-template-columns: 285px 1fr;
+    grid-template-areas:
+      "image card-content"
+      "image card-footer";
+    & .card__image {
+      grid-area: image;
+      height: 100%;
+      object-fit: cover;
+      object-position: left center;
+      border-radius: 10px 0 0 10px;
+    }
+    & .card__content {
+      grid-area: card-content;
+      padding: 32px 40px 0;
+      & h1.card__title {
+        font-size: 20px;
+        line-height: 1.4;
+        letter-spacing: 0.25px;
+        paragraph-spacing: 1px;
+        color: var(--very-dark-grayish-blue);
+        padding-bottom: 12px;
+      }
+      & p.card__description {
+        padding-bottom: 20px;
+      }
+    }
+    & .card__footer {
+      grid-area: card-footer;
+      padding: 0 40px 32px;
+
+      & .card__share {
+        position: relative;
+        & .card__share-links {
+          opacity: 0;
+          width: 0;
+          height: 0;
+          background-color: var(--very-dark-grayish-blue);
+          transition: width 0.3s ease-in-out;
+          & p {
+            font-size: 0;
+          }
+          & ul {
+            width: 0;
+          }
+        }
+        & .card__share-links.popover-active {
+          opacity: 1;
+          width: 248px;
+          height: 55px;
+          grid-template-columns: auto 1fr;
+          padding: 0 36px;
+          border-radius: 10px;
+          filter: drop-shadow(0 40px 40px var(--drop-shadow));
+          display: grid;
+          grid-template-columns: auto 1fr;
+          align-items: center;
+          gap: 21px;
+          position: absolute;
+          top: calc((55px + 28px) * -1);
+          right: calc(((248px / 2) - 15px) * -1);
+          &:after {
+            content: "";
+            width: 0;
+            height: 0;
+            border-top: 12px solid var(--very-dark-grayish-blue);
+            border-bottom: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-left: 12px solid transparent;
+            position: absolute;
+            bottom: -23px;
+            left: calc(50% - 12px);
+          }
+          & p {
+            font-weight: var(--fw-medium);
+            font-size: 13px;
+            line-height: 1.5;
+            letter-spacing: 5px;
+            paragraph-spacing: 1px;
+            color: var(--grayish-blue);
+            text-transform: uppercase;
+          }
+          & ul {
+            width: 100%;
+            display: flex;
+            gap: 16px;
+            align-items: end;
+          }
+        }
       }
     }
   }
