@@ -50,7 +50,7 @@ main {
 }
 
 .card {
-  width: 100%;
+  width: 327px;
   margin: 0 auto;
   border-radius: 10px;
   background-color: white;
@@ -228,29 +228,41 @@ main {
           opacity: 0;
           width: 0;
           height: 0;
+          position: absolute;
           background-color: var(--very-dark-grayish-blue);
-          transition: width 0.3s ease-in-out;
+          transform-origin: bottom center;
+          transform: scaleY(0);
+          transition: transform 0.1s linear;
           & p {
             font-size: 0;
+            transition: none;
           }
           & ul {
             width: 0;
+            transition: none;
           }
         }
-        & .card__share-links.popover-active {
+        & .card__share-btn.popover-show {
+          background-color: var(--desaturated-dark-blue);
+          & svg path {
+            fill: var(--white);
+          }
+        }
+        & .card__share-links.popover-show {
           opacity: 1;
           width: 248px;
           height: 55px;
+          transform: scaleY(1);
           grid-template-columns: auto 1fr;
           padding: 0 36px;
           border-radius: 10px;
-          filter: drop-shadow(0 40px 40px var(--drop-shadow));
+          filter: drop-shadow(0 10px 10px var(--drop-shadow));
           display: grid;
           grid-template-columns: auto 1fr;
           align-items: center;
           gap: 21px;
           position: absolute;
-          top: calc((55px + 28px) * -1);
+          top: calc((55px + 30px) * -1);
           right: calc(((248px / 2) - 15px) * -1);
           &:after {
             content: "";
