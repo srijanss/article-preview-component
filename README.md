@@ -130,7 +130,7 @@ I've also used window.innerWidth to decide on which share links styles to use fo
 
 ### Continued development
 
-I will focus more on CSS transition and aniimation properties to make the animations more shuttle and professional looking.
+I will focus more on CSS transition and animation properties to make the animations more subtle and professional.
 
 ## Author
 
